@@ -33,5 +33,40 @@ userModule.controller("userLoginController", ['$scope',
                 autoLogin: false
             }
         };
+
+        $scope.greeting = {
+            text:"This is test directive."
+        };
+
     }
 ]);
+
+/**创建一个自定义指令*/
+userModule.directive("hello",function () {
+    return {
+        restrict:"AEMC",
+        template:"<div>Hello Everyone</div>",
+        replace:true
+    }
+});
+
+/**templateUrl与transclude使用*/
+userModule.directive("hello2",function () {
+    return {
+        restrict:"AEMC",
+        templateUrl:"tpls/hello.html",
+        transclude:true
+    }
+});
+
+/**$templateCache使用*/
+$templateCache.put("caChe.html", "<div>this is test templateCache</div>");
+userModule.run(function ($templateCache) {
+});
+userModule.directive("cache",function ($templateCache) {
+    return {
+        restrict:"AEMC",
+        template:$templateCache.get("caChe.html"),
+        replace:true
+    }
+});
